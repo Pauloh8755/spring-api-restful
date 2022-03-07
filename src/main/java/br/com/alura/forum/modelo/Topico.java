@@ -4,18 +4,42 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Topico {
+import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 
+
+
+//anotation de representação de entidade
+@Entity
+public class Topico {
+	//anotation de geração de id
+	@Id @GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	private String titulo;
 	private String mensagem;
 	private LocalDateTime dataCriacao = LocalDateTime.now();
+	//anotation de representação de ENUM
+	@Enumerated(EnumType.STRING)
 	private StatusTopico status = StatusTopico.NAO_RESPONDIDO;
+	//anotation de representação de relacionamento N:1
+	@ManyToOne
 	private Usuario autor;
+	//anotation de representação de relacionamento N:1
+	@ManyToOne
 	private Curso curso;
+	//anotation de representação de relacionamento 1:N
+	//mappedBy para não identificar como novo mapeamento
+	@OneToMany(mappedBy = "topico")
 	private List<Resposta> respostas = new ArrayList<>();
 
 	public Topico(String titulo, String mensagem, Curso curso) {
+		this.id = 1L;
 		this.titulo = titulo;
 		this.mensagem = mensagem;
 		this.curso = curso;

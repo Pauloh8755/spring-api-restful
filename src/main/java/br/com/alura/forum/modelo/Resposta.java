@@ -2,12 +2,25 @@ package br.com.alura.forum.modelo;
 
 import java.time.LocalDateTime;
 
-public class Resposta {
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 
+//anotation de representação de entidade
+@Entity
+public class Resposta {
+	//anotation para a geração de id
+	@Id @GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	private String mensagem;
+	//anotation de representação de relacionamento N:1
+	@ManyToOne
 	private Topico topico;
 	private LocalDateTime dataCriacao = LocalDateTime.now();
+	//anotation de representação de relacionamento N:1s
+	@ManyToOne
 	private Usuario autor;
 	private Boolean solucao = false;
 
