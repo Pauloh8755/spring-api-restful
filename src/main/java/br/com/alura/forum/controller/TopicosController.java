@@ -60,8 +60,9 @@ public class TopicosController {
          *  1° cabeçalho http chamado location com a url do recurso criado
          *  2° Uma representação desse recurso no body do response 
          */
-        //Criando uri por meio do uriBuilder
+        //Criando uri por meio do uriBuilder e resgatando id
         URI uri = uriBuilder.path("/topicos/{id}").buildAndExpand(topico.getId()).toUri();
-        return ResponseEntity.created(uri)
+        //created -> define status cod como 201
+        return ResponseEntity.created(uri).body(new TopicoDto(topico));
     }
 }
