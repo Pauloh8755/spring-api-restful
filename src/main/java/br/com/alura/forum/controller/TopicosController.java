@@ -22,8 +22,18 @@ public class TopicosController {
     @RequestMapping("/topicos")
     //Indicando que o retorno do método deve ser serializado e devolvido no corpo da resposta
     @ResponseBody
-    public List<TopicoDto> lista(){
-        List<Topico> topicos = topicoRepository.findAll();
-        return TopicoDto.converter(topicos);
+    public List<TopicoDto> lista(String nomeCurso){
+        if(nomeCurso == null){
+            //utilizando jpa para listar todos os registros
+            List<Topico> topicos = topicoRepository.findAll();
+            return TopicoDto.converter(topicos);
+        } else {
+            //filtrando por atributos:
+            //relacionamentoo(findByEntidaderelacionamentoAtributo)
+            //atributo da propri entidade (findByAtributo)
+            List<Topico> topicos = topicoRepository.findByCurso_Nome(nomeCurso);
+            return TopicoDto.converter(topicos);
+        }
+        
     }
 }
